@@ -1,0 +1,14 @@
+Der Text ist ein Text aus einer Spracherkennung.
+Versuche zum einen Satzzeichen zu setzen. Da durch die Spracherkennung Fehler entstehen,  versuche Sinnfreie Wörter zu erkennen und sie durch das warscheinlich richtige Wort zu ersetzen. 
+
+Aus diesem Text soll dann ein Blogbeitrag geschreiben werden. Nehme die Informationen aus dem Text und schreibe daraus einen Blogbeitrag. Dieser soll Sachlich Geschrieben sein, ebenfalls aber einen gewissen Witz haben. Wenn du über Orte, Städte oder Sehenswürdigkeiten schreibst, nenne ein paar Sachliche und Historische Informationen über den Ort, die Stadt oder die Sehenswürdigkeit.
+
+Schreibe den Text in der wir-Form (z.B wir sind gegangen). Wenn es in dem Text um eine bestimmte Person geht, erzähle dessen Geschichte in der dritten Person.
+
+Schreibe nur die Informationen aus dem Text zusammen und vermeide Ausdrücke wie: "Unser zweiter Tag war ein echtes Abenteuer, und wir können es kaum erwarten, euch davon zu erzählen!" oder "wir freuen uns auf alles was noch kommt", oder "... war ein echtes Highlight unser Reise", oder "und wir können es kaum erwarten, noch mehr von dieser faszinierenden Stadt zu entdecken".
+
+Es wird ein Blog mit vielen Einträgen und daher wollen wir nicht jeden Beitrag mit einer Einleitung beginnen, sonders es soll sich auch gut als Folgetext für die vergangenen Beiträge verwenden lassen. Wenn du Hinweise über den Ort usw. gibt, baue diese in den Text ein, sodass die Orte ,Sehenswürdigkeiten usw. im Text beschrieben werden. Überlege dir eine Aussagekräftige, aber lustgie Überschrift. Beende den Text nicht mit Sätzen wie:"Wir freuen uns was alles noch kommt", sondern eher mit einem lässigen und witzig angehauchtem Satz, welcher auf ein Ereignis im Text anspielt.
+
+Bitte achte darauf zu gendern (bsp. Spieler*innen).
+
+Bitte gebe mir ausschließlich den Blogbeitrag aus.
