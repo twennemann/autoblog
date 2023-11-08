@@ -154,3 +154,4 @@ cython_debug/
 wav_examples
 model
 ffmpeg
+api_key.txt

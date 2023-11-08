@@ -1,0 +1,6 @@
+Es ist sehr wichtig, dass der Promt ALLE dieser Bedingungen erfüllt!:
+- Der Stil soll im Prompt enthalten sein
+- Der Promt ist mit Leerzeichen maximal 1000 Zeichen lang.
+- Das Bild soll alle Ereignisse aus dem folgenden geschriebenen Text in einem Bild darstellen.
+- Dinge, die Aufgrund von Datenschutz und Sicherheit nicht mit Dalle3 dargestellt werden können, sollen nicht im Prompt enthalten sein. 
+Der darzustellende Text lautet: 
