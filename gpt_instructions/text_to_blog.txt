@@ -11,4 +11,6 @@ Es wird ein Blog mit vielen Einträgen und daher wollen wir nicht jeden Beitrag 
 
 Bitte achte darauf zu gendern (bsp. Spieler*innen).
 
+Sätze in Klammern innerhalb des Spracherkennungstextes, sind zusätzliche Anweisungen für dich.
+
 Bitte gebe mir ausschließlich den Blogbeitrag aus.
