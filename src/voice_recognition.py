@@ -1,5 +1,5 @@
 # %%
-"""Import and Functions"""
+"""Import"""
 import speech_recognition as sr
 import tkinter as tk
 from tkinter import simpledialog, messagebox, filedialog
@@ -12,31 +12,36 @@ import openai
 import requests
 import shutil
 
-
-speech_engine = sr.Recognizer()
-# Globale Variablen für die Länge der Audiodaten
+# %%
+"""Globale Variablen und Default Pfade"""
 full_text = ""
 recording = False
 audio_data = []
-
 total_length_of_audio = 0
 processed_length = 0
+speech_engine = sr.Recognizer()
 
-DEFAULT_PATH_TXT = r"C:\Users\twenn\Documents\GitHub\wav_to_text\text_data"
-DEFAULT_PATH_WAV = r"C:\Users\twenn\Documents\GitHub\wav_to_text\wav_examples"
+def get_base_path():
+    # Ermitteln des aktuellen Skriptpfads
+    current_script_path = os.path.abspath(__file__)
 
+    # Ermitteln des übergeordneten Verzeichnisses des aktuellen Skripts (zwei Ebenen nach oben)
+    base_directory = os.path.dirname(os.path.dirname(current_script_path))
 
-file_name = "test_cartagena_safety.txt"  # Geben Sie hier den gewünschten Dateinamen ein
-file_path = f'C:/Users/twenn/Documents/GitHub/wav_to_text/text_data/tests/GPT-Ausgabe/{file_name}'
-# Ihren API-Schlüssel hier einfügen
-# openai.api_key = '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'
-# Pfad zur Textdatei mit den Anweisungen
-blog_instructions_path = r"C:\Users\twenn\Documents\GitHub\wav_to_text\gpt_instructions\text_to_blog.txt"
-# Pfad zur Textdatei mit den Anweisungen für das Bild
-picture_instructions_path = r"C:\Users\twenn\Documents\GitHub\wav_to_text\gpt_instructions\text_to_dalle.txt"
-# Pfad zur Textdatei mit den Anweisungen für das Bild
-safety_guide_path = r"C:\Users\twenn\Documents\GitHub\wav_to_text\gpt_instructions\follow_safety_guide.txt"
+    return base_directory
 
+# Basispfad ermitteln
+base_path = get_base_path()
+
+# Pfade zu den Verzeichnissen und Textdateien festlegen
+DEFAULT_PATH_TXT = os.path.join(base_path, 'text_data')
+DEFAULT_PATH_WAV = os.path.join(base_path, 'wav_examples')
+
+blog_instructions_path = os.path.join(base_path, 'gpt_instructions', 'text_to_blog.txt')
+picture_instructions_path = os.path.join(base_path, 'gpt_instructions', 'text_to_dalle.txt')
+safety_guide_path = os.path.join(base_path, 'gpt_instructions', 'follow_safety_guide.txt')
+
+# %% 
 
 def return_to_default(label_text=False,
                       recording_button=False,
@@ -358,16 +363,58 @@ def check_and_load_api_key():
     else:
         display_key_entry()
 
+def is_valid_openai_key(api_key):
+    """
+    Überprüft, ob der gegebene OpenAI API-Schlüssel gültig ist,
+    indem eine einfache Anfrage an die OpenAI API gesendet wird.
+    """
+    test_url = "https://api.openai.com/v1/engines"  # Eine Anfrage, die keine Kosten verursacht
+    headers = {
+        "Authorization": f"Bearer {api_key}"
+    }
+    try:
+        response = requests.get(test_url, headers=headers)
+        if response.status_code == 200:
+            return True  # Der API-Schlüssel ist gültig
+        else:
+            return False  # Ungültiger API-Schlüssel oder andere Fehler
+    except Exception as e:
+        print(f"Es gab einen Fehler bei der Überprüfung des API-Schlüssels: {e}")
+        return False
+
+def save_api_key_to_file(key):
+    license_folder_path = get_license_folder_path()
+    os.makedirs(license_folder_path, exist_ok=True)
+    with open(os.path.join(license_folder_path, 'openai_key.txt'), 'w') as file:
+        file.write(key)
+    openai.api_key = key
+
+def display_licensing_ui():
+    window.geometry("600x200")  # Fenstergröße auf 600x200 Pixel einstellen
+    api_key_label.pack(pady=20)
+    api_key_entry.pack(pady=20)
+    api_key_button.pack(pady=20)
+    main_paned_window.pack_forget()
+
+def display_main_ui():
+    window.geometry("") # Stellt die Windowgröße auf default, sodass alle Elemente dargestellt werden
+    api_key_label.pack_forget()
+    api_key_entry.pack_forget()
+    api_key_button.pack_forget()
+    #key_active_label.pack(pady=20)
+    main_paned_window.pack(fill=tk.BOTH, expand=True)
+
 def save_api_key():
     key = api_key_entry.get()
-    if key:
+    if key and is_valid_openai_key(key):
         license_folder_path = get_license_folder_path()
         os.makedirs(license_folder_path, exist_ok=True)
         with open(os.path.join(license_folder_path, 'openai_key.txt'), 'w') as file:
             file.write(key)
         openai.api_key = key
-        display_key_active()
-
+        display_main_ui()
+    else:
+        messagebox.showerror("Fehler", "Der eingebene OpenAI API Key ist ungültig!")
 
 def display_key_entry():
     api_key_label.pack(pady=20)
@@ -375,10 +422,32 @@ def display_key_entry():
     api_key_button.pack(pady=20)
 
 def display_key_active():
-    key_active_label.pack(pady=20)
+    #key_active_label.pack(pady=20)
     api_key_label.pack_forget()
     api_key_entry.pack_forget()
     api_key_button.pack_forget()
+
+def open_change_api_key_window():
+    change_window = tk.Toplevel(window)
+    change_window.title("Change API Key")
+    change_window.geometry("600x200")
+
+    change_api_key_label = tk.Label(change_window, text="Enter your new OpenAI API Key:")
+    change_api_key_entry = tk.Entry(change_window, width=60)
+    change_api_key_button = tk.Button(change_window, text="Save New API Key", command=lambda: save_new_api_key(change_api_key_entry.get(), change_window))
+
+    change_api_key_label.pack(pady=20)
+    change_api_key_entry.pack(pady=20)
+    change_api_key_button.pack(pady=20)
+
+def save_new_api_key(key, change_window):
+    if key and is_valid_openai_key(key):
+        save_api_key_to_file(key)
+        print("Neuer Key gespeichert")
+        change_window.destroy()  # Schließt das Fenster für den API-Key-Wechsel
+    else:
+        messagebox.showerror("Fehler", "Der eingegebene OpenAI API Key ist ungültig!")
+
 
 # %%
 """Gui"""
@@ -390,18 +459,17 @@ def toggle_style_entry():
     else:
         enter_style_label.pack(pady=(5,0))
         style_entry.pack(pady=(0,20))
-
+        
 window = tk.Tk()
 window.title("Speech Recognition")
 
 # API-Key Eingabefeld und Button
 api_key_label = tk.Label(window, text="Enter your OpenAI API Key:")
-api_key_entry = tk.Entry(window)
+api_key_entry = tk.Entry(window, width=60)  # Breite auf 60 Zeichen einstellen
 api_key_button = tk.Button(window, text="Save API Key", command=save_api_key)
-key_active_label = tk.Label(window, text="Key active!", fg="green")
 
 # Überprüfen, ob der API-Key bereits gespeichert ist
-check_and_load_api_key()
+# check_and_load_api_key()
 
 # Haupt-PanedWindow-Widget, das vertikal aufgeteilt ist
 main_paned_window = tk.PanedWindow(window, orient=tk.VERTICAL)
@@ -486,6 +554,10 @@ style_entry.pack(pady=(0,20))
 generate_blog_button = tk.Button(generade_pane, text="Generate", command=save_to_file, font=("Arial", 12))
 generate_blog_button.pack(pady=20)
 
+# Button zum Ändern des API-Schlüssels im generade_pane hinzufügen
+change_api_key_button = tk.Button(generade_pane, text="Change API-Key", command=open_change_api_key_window)
+change_api_key_button.pack(pady=20)
+
 
 """Anpassen der Angezeigten größen"""
 # Erhöhen der Größe des rechten Bereichs
@@ -500,7 +572,13 @@ slider_length = 300  # Sie können diesen Wert anpassen, um die gewünschte Län
 for slider in sliders.values():
     slider.config(length=slider_length)
 
-# Starten der Hauptereignisschleife
+# Start der Anwendung
+if not os.path.exists(os.path.join(get_license_folder_path(), 'openai_key.txt')):
+    display_licensing_ui()
+else:
+    check_and_load_api_key()
+    display_main_ui()
+
 window.mainloop()
 
 # %%
