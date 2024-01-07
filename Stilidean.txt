@@ -49,53 +49,44 @@ Ukiyo-e-Holzschnitt
 Cyberpunk-VR-Umgebung
 Vortizismus-Graphitzeichnung
 
-Surrealismus
-Expressionismus
-Impressionismus
-Kubismus
-Fauvismus
-Art Deco
-Barock
-Rokoko
-Gotik
-Renaissance
-Neoklassizismus
-Romantik
-Abstrakter Expressionismus
-Minimalismus
-Futurismus
-Dadaismus
-Konstruktivismus
-Art Nouveau (Jugendstil)
-Symbolismus
-Pointillismus
-Tachismus
-Karikatur
-Realismus
-Präraffaeliten
-Art Brut
-Folk Art
-Konzeptkunst
-Op-Art
-Pop-Art
-Suprematismus
-Arts and Crafts Bewegung
-Bauhaus
-Kinetic Art
-Digitale Kunst
-Neoimpressionismus
-Post-Impressionismus
-Steampunk
-Biomechanik
-Kalligrafie
-Manga-Stil
-Art Nouveau
-Psychedelische Kunst
-Neoexpressionismus
-Fotorealismus
-Land Art
-Arte Povera
-Neo-Dada
-Ukiyo-e (Japanische Holzschnittkunst)
-Cyberpunk
-Vortizismus
+Steampunk: Eine Mischung aus industrieller Revolution und futuristischen Elementen.
+Surrealismus: Denken Sie an Salvador Dalí – traumhafte Szenarien mit schmelzenden Uhren und verzerrten Objekten.
+Pixel Art im Retro-Gaming-Stil: Ähnlich wie 8-Bit, aber mit einem Fokus auf klassische Videospiele.
+Pop Art à la Andy Warhol: Leuchtende Farben und wiederholte Muster.
+Art Deco: Elegante, geometrische Formen und lebendige Farben.
+Impressionismus: Denken Sie an Claude Monet, mit leichten Pinselstrichen und Fokus auf Lichteffekte.
+Graffiti-Kunst: Bunte, kühne und oft abstrakte Straßenkunst.
+Glasmosaik: Bilder zusammengesetzt aus kleinen, farbigen Glasstücken.
+Manga/Anime-Stil: Japanische Comic-Kunst mit betonten Emotionen und dramatischen Effekten.
+Art Nouveau: Fließende Linien und organische Formen, oft mit floralen Motiven.
+Minimalismus: Einfache, abstrakte Kompositionen mit begrenztem Farbschema.
+Futurismus: Dynamische Darstellungen von Bewegung und Technologie.
+Gothic: Dunkle, mittelalterliche Elemente mit einem Hauch von Mysterium.
+Barock: Dramatische Inszenierungen mit reichem Detail und Kontrast.
+Konzeptkunst: Visionäre Szenen, die oft in der Spiele- oder Filmindustrie verwendet werden.
+Collage mit Vintage-Fotos: Kombination alter Fotografien mit modernen Elementen.
+Neo-Expressionismus: Wilde, emotionale Pinselstriche und kräftige Farben.
+Holographischer Stil: Schillernde, irisierende Farben und Effekte.
+Zentangle-Kunst: Komplexe Muster aus wiederholten, kleinen Zeichnungen.
+Pointillismus: Bildaufbau aus kleinen, distinkten Punkten von Farbe.
+
+Unterwasser-Stadtbild: Eine Stadt, die komplett unter Wasser liegt, mit Fischen und Korallen.
+Infrarot-Natur: Landschaften und Szenen, die so aussehen, als wären sie durch eine Infrarotkamera aufgenommen.
+Schattenpuppen-Silhouette: Alles wird nur als Schattenrisse dargestellt.
+Leuchtende Neon-Linienkunst: Objekte und Szenen, die nur aus neonfarbenen Linien bestehen.
+Antike Höhlenmalereien: Szenen, die wie prähistorische Wandzeichnungen aussehen.
+Viktorianische Fotocollage: Eine Kombination aus viktorianischen Elementen in einer modernen Collage.
+Kaleidoskop-Muster: Bilder, die in kaleidoskopartigen Mustern angeordnet sind.
+Origami-Papierkunst: Szenen, die so aussehen, als wären sie komplett aus gefaltetem Papier.
+Durchscheinende Glas-Skulpturen: Objekte, die aus durchscheinendem, farbigem Glas bestehen.
+Röntgenbild-Kunst: Motive, die wie Röntgenaufnahmen aussehen.
+Futuristischer Tribalismus: Eine Kombination aus futuristischen und traditionellen tribalistischen Elementen.
+Schwebende Inseln: Landschaften mit schwebenden Inseln im Himmel.
+Interaktive Spielzeugwelten: Szenen, die wie lebendige Spielzeuglandschaften aussehen.
+Abstrakte Datenvisualisierung: Komplexe Datenmuster in einer künstlerischen Darstellung.
+Psychedelische Zirkuswelt: Eine Zirkusszene in wilden, psychedelischen Farben.
+Schmelzende Uhrenlandschaft: Eine Hommage an Dalís schmelzende Uhren in verschiedenen Szenarien.
+Biolumineszente Tiefseewelt: Tiefseeumgebungen mit leuchtenden Kreaturen und Pflanzen.
+Mechanische Insektenwelt: Insekten und Tiere, die wie mechanische Maschinen aussehen.
+Galaktische Nebel-Städte: Städtische Szenen, eingebettet in kosmische Nebel und Sternenstaub.
+Fiktive Sprachenschrift: Bilder, die komplett aus einer erfundenen, visuell ansprechenden Schriftsprache bestehen.

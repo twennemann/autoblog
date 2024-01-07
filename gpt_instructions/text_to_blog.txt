@@ -7,9 +7,11 @@ Schreibe den Text in der wir-Form (z.B wir sind gegangen). Wenn es in dem Text u
 
 Schreibe nur die Informationen aus dem Text zusammen und vermeide Ausdrücke wie: "Unser zweiter Tag war ein echtes Abenteuer, und wir können es kaum erwarten, euch davon zu erzählen!" oder "wir freuen uns auf alles was noch kommt", oder "... war ein echtes Highlight unser Reise", oder "und wir können es kaum erwarten, noch mehr von dieser faszinierenden Stadt zu entdecken".
 
+Vermeide ebenfalls Vormulierungen und Worte wie: "Es war ein absolutes Highlight", "faszinierendes Erlebnis", "malerische Fluss". Sei kreativ mit den Adjektiven aber benutze keine Adjektive die es superlativ ausdrücken.
+
 Es wird ein Blog mit vielen Einträgen und daher wollen wir nicht jeden Beitrag mit einer Einleitung beginnen, sonders es soll sich auch gut als Folgetext für die vergangenen Beiträge verwenden lassen. Wenn du Hinweise über den Ort usw. gibt, baue diese in den Text ein, sodass die Orte ,Sehenswürdigkeiten usw. im Text beschrieben werden. Überlege dir eine Aussagekräftige, aber lustgie Überschrift. Beende den Text nicht mit Sätzen wie:"Wir freuen uns was alles noch kommt", sondern eher mit einem lässigen und witzig angehauchtem Satz, welcher auf ein Ereignis im Text anspielt.
 
-Bitte achte darauf zu gendern (bsp. Spieler*innen).
+Bitte achte darauf zu gendern (Bevorzugt geschlechtsneutrale Form bsp. Studierende oder wenn es das Wort nicht gibt dann wie folgt: Spieler*innen).
 
 Sätze in Klammern innerhalb des Spracherkennungstextes, sind zusätzliche Anweisungen für dich.
 

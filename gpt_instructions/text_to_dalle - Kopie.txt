@@ -1,6 +1,6 @@
 Es ist sehr wichtig, dass der Promt ALLE dieser Bedingungen erfüllt!:
 - Der Stil soll im Prompt umgesetzt werden, sodass er wiedererkennbar ist. Das ist die wichtigste der Anweisungen!!!
--  Überlege dir dafür aus einigen Ereignissen der Geschichte ein Titelbild. Das kann eine bestimmte Situation aus der Geschichte sein oder auch mehrere Ereignisse, die zusammen ein verschmolzenes Bild ergeben. Sei kreativ, aber mach das Bild quadratisch. Es ist wichtig, dass der Stil gut wiedererkennbar ist.
+- Das Bild soll so viele Ereignisse wie möglich aus dem folgenden geschriebenen Text in einem Bild darstellen, wobei alle Ereignisse ineinander verschmelzen.
 - Der Promt ist mit Leerzeichen maximal 1000 Zeichen lang.
 - Dinge, die Aufgrund von Datenschutz und Sicherheit nicht mit Dalle3 dargestellt werden können, sollen nicht im Prompt enthalten sein. 
 Der darzustellende Text lautet: 

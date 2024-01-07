@@ -7,7 +7,6 @@ import threading
 from pydub import AudioSegment
 import os
 from pydub.silence import split_on_silence
-from tkinter.ttk import Progressbar
 import openai
 import requests
 import shutil
@@ -41,22 +40,9 @@ blog_instructions_path = os.path.join(base_path, 'gpt_instructions', 'text_to_bl
 picture_instructions_path = os.path.join(base_path, 'gpt_instructions', 'text_to_dalle.txt')
 safety_guide_path = os.path.join(base_path, 'gpt_instructions', 'follow_safety_guide.txt')
 
-# %% 
 
-def return_to_default(label_text=False,
-                      recording_button=False,
-                      return_full_text=False):
-    global full_text
-    if label_text:
-        recordning_label.config(text="Press the button to start recording \n"
-                                "or load an Audio File.")
-    if recording_button:
-        record_button.config(bg="gray")
-    if return_full_text:
-        full_text = ""
-
-
-
+# %%
+"""Spracherkennung"""
 def load_audio_file():
     if os.path.exists(DEFAULT_PATH_WAV):
         initial_dir = DEFAULT_PATH_WAV
@@ -224,7 +210,8 @@ def update_progress(length):
     percentage = round(100 * (processed_length / total_length_of_audio))
     recordning_label.config(text=f"Recognition: {percentage}%")
 
-
+# %%
+"""AI Kommunikation"""
 def text_to_blog(audio_text, safe_path=None, style="Zufälliger Stil",
                  extra_instruction=""):
     global blog_instructions_path
@@ -241,7 +228,7 @@ def text_to_blog(audio_text, safe_path=None, style="Zufälliger Stil",
         messages=[
             {"role": "user", "content": audio_text + "\n" + blog_instructions + extra_instruction},
         ],
-        max_tokens=1000,  # Legen Sie die maximale Anzahl von Tokens für die Antwort fest
+        max_tokens=2000,  # Legen Sie die maximale Anzahl von Tokens für die Antwort fest
         temperature=sliders["temperature"].get(),  
         top_p=sliders["top_p"].get(),  
         frequency_penalty=sliders["frequency_penalty"].get(),  
@@ -250,7 +237,7 @@ def text_to_blog(audio_text, safe_path=None, style="Zufälliger Stil",
 
     blog_text = response['choices'][0]['message']['content'].strip()
     if safe_path is not None:
-        blog_to_pic = f"Erstelle mir ein Bild im Stil '{style}' aus der folgenden Erzählung. Das Bild soll alle Ereignisse in einem Bild darstellen. Die Ereignisse sollen in dem Bild ineinander übergehen. Stelle die im Text beschriebenen Personen nicht mit dar! Die Erzählung lautet: \n "
+        blog_to_pic = f"Erstelle mir ein Bild im Stil '{style}' aus der folgenden Erzählung. Überlege dir dafür aus einigen Ereignissen der Geschichte ein Titelbild. Das kann eine bestimmte Situation aus der Geschichte sein oder auch mehrere Ereignisse, die zusammen ein verschmolzenes Bild ergeben. Sei kreativ, aber mach das Bild quadratisch. Es ist wichtig, dass der Stil gut wiedererkennbar ist. Die Erzählung lautet: \n"#Das Bild soll alle Ereignisse in einem Bild darstellen. Die Ereignisse sollen in dem Bild ineinander übergehen. Stelle die im Text beschriebenen Personen nicht mit dar! Die Erzählung lautet: \n "
         pic_style =f'\n \n Das mit der KI generierte Bild ist erzeugt im Stil: "{style}"'
         # Öffnet die Datei und schreibt den Antworttext hinein
         with open(safe_path, 'w', encoding='utf-8') as file:
@@ -444,13 +431,23 @@ def save_new_api_key(key, change_window):
     if key and is_valid_openai_key(key):
         save_api_key_to_file(key)
         print("Neuer Key gespeichert")
-        change_window.destroy()  # Schließt das Fenster für den API-Key-Wechsel
     else:
         messagebox.showerror("Fehler", "Der eingegebene OpenAI API Key ist ungültig!")
-
+    change_window.destroy()  # Schließt das Fenster für den API-Key-Wechsel
 
 # %%
 """Gui"""
+def return_to_default(label_text=False,
+                      recording_button=False,
+                      return_full_text=False):
+    global full_text
+    if label_text:
+        recordning_label.config(text="Press the button to start recording \n"
+                                "or load an Audio File.")
+    if recording_button:
+        record_button.config(bg="gray")
+    if return_full_text:
+        full_text = ""
 
 def toggle_style_entry():
     if not generate_pictures_var.get():
@@ -571,8 +568,8 @@ style_entry.config(width=50)
 slider_length = 300  # Sie können diesen Wert anpassen, um die gewünschte Länge zu erreichen
 for slider in sliders.values():
     slider.config(length=slider_length)
-
-# Start der Anwendung
+# %%
+"""Start der Anwendung"""
 if not os.path.exists(os.path.join(get_license_folder_path(), 'openai_key.txt')):
     display_licensing_ui()
 else:
@@ -581,4 +578,4 @@ else:
 
 window.mainloop()
 
-# %%
+
