@@ -33,8 +33,8 @@ def get_base_path():
 base_path = get_base_path()
 
 # Pfade zu den Verzeichnissen und Textdateien festlegen
-DEFAULT_PATH_TXT = os.path.join(base_path, 'text_data')
-DEFAULT_PATH_WAV = os.path.join(base_path, 'wav_examples')
+DEFAULT_PATH_TXT = os.path.join(base_path, 'output')
+DEFAULT_PATH_WAV = os.path.join(base_path, 'audio_data')
 
 blog_instructions_path = os.path.join(base_path, 'gpt_instructions', 'text_to_blog.txt')
 picture_instructions_path = os.path.join(base_path, 'gpt_instructions', 'text_to_dalle.txt')
@@ -181,6 +181,7 @@ def save_to_file():
                                              initialdir=initial_dir,
                                              filetypes=[("Text files", "*.txt"),
                                                         ("All files", "*.*")])
+    
     style = style_entry.get()
     if style == "":
         style = "Zufälliger Stil"
@@ -209,6 +210,22 @@ def update_progress(length):
     processed_length += length
     percentage = round(100 * (processed_length / total_length_of_audio))
     recordning_label.config(text=f"Recognition: {percentage}%")
+
+def create_folder(folder_path):
+    # Überprüft, ob der Pfad existiert
+    if not os.path.exists(folder_path):
+        # Erstellt den Ordner, falls er nicht existiert
+        os.makedirs(folder_path)
+    else:
+        # Zählt hoch, bis ein nicht existierender Pfad gefunden wird
+        counter = 2
+        new_folder_path = f"{folder_path}_{counter}"
+        while os.path.exists(new_folder_path):
+            counter += 1
+            new_folder_path = f"{folder_path}_{counter}"
+
+        # Erstellt den neuen Ordner
+        os.makedirs(new_folder_path)
 
 # %%
 """AI Kommunikation"""
@@ -336,7 +353,7 @@ def get_license_folder_path():
     # Ermitteln des übergeordneten Verzeichnisses des aktuellen Skripts (zwei Ebenen nach oben)
     parent_directory = os.path.dirname(os.path.dirname(current_script_path))
     # Pfad zum Licence-Ordner im übergeordneten Verzeichnis
-    license_folder_path = os.path.join(parent_directory, 'Licence')
+    license_folder_path = os.path.join(parent_directory, 'licence')
     return license_folder_path
 
 def check_and_load_api_key():
