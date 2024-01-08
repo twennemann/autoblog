@@ -33,8 +33,8 @@ def get_base_path():
 base_path = get_base_path()
 
 # Pfade zu den Verzeichnissen und Textdateien festlegen
-DEFAULT_PATH_TXT = os.path.join(base_path, 'text_data')
-DEFAULT_PATH_WAV = os.path.join(base_path, 'wav_examples')
+DEFAULT_PATH_TXT = os.path.join(base_path, 'output')
+DEFAULT_PATH_WAV = os.path.join(base_path, 'audio_data')
 
 blog_instructions_path = os.path.join(base_path, 'gpt_instructions', 'text_to_blog.txt')
 picture_instructions_path = os.path.join(base_path, 'gpt_instructions', 'text_to_dalle.txt')
@@ -177,20 +177,60 @@ def save_to_file():
         initial_dir = DEFAULT_PATH_TXT
     else:
         initial_dir = None
-    file_name = filedialog.asksaveasfilename(defaultextension=".txt",
+
+    folder_path = filedialog.asksaveasfilename(defaultextension=".txt",
                                              initialdir=initial_dir,
                                              filetypes=[("Text files", "*.txt"),
                                                         ("All files", "*.*")])
+    folder_path = folder_path.replace(".txt", "")
+
+    if not folder_path:
+        # Benutzer hat die Auswahl abgebrochen
+        return
+
+    # Stellt sicher, dass der Ordner existiert
+    if not os.path.exists(folder_path):
+        os.makedirs(folder_path)
+    else:
+        # Zählt hoch, bis ein nicht existierender Pfad gefunden wird
+        counter = 2
+        new_folder_path = f"{folder_path}_{counter}"
+        while os.path.exists(new_folder_path):
+            counter += 1
+            new_folder_path = f"{folder_path}_{counter}"
+
+        # Erstellt den neuen Ordner
+        os.makedirs(new_folder_path)
+        folder_path = new_folder_path
+        #tk.messagebox.showerror("Fehler", "Der Ordner existiert bereits.")
+    
+    # Erstelle Cache Ordner in folder_path
+    cache_path = os.path.join(folder_path, 'cache')
+    os.makedirs(cache_path)
+
+    # Speicher der Spracherkennung
+    recogniced_text_path = os.path.join(cache_path, 'recogniced_text.txt')
+    with open(recogniced_text_path, 'w', encoding='utf-8') as file:
+        file.write(full_text)
+    # Extrahiert den Namen des Ordners aus dem Pfad
+    folder_name = os.path.basename(folder_path)
+
+    # Definiert den Pfad für die Textdatei basierend auf dem Ordnernamen
+    file_path_txt = os.path.join(folder_path, f'{folder_name}.txt')
+    
     style = style_entry.get()
     if style == "":
-        style = "Zufälliger Stil"
+        style = None
     extra_instruction = extra_instruction_entry.get()
     if extra_instruction != "":
         extra_instruction = "\n\n Befolge Außerdem folgende Extraanweisungen:\n" + extra_instruction + "\n\n"
-    blog_text = text_to_blog(full_text, file_name, style, extra_instruction)
+
+    blog_text = text_to_blog(full_text, file_path_txt, style, extra_instruction)
+
     if generate_pictures_var.get():
-        # Der Haken ist gesetzt, führe text_to_picture aus
-        blog_to_picture(blog_text, style, file_name)
+        pic_amount = 1
+        # Ruft die Funktion auf, um Bilder zu generieren und zu speichern
+        blog_to_picture(blog_text, style, file_path_txt, pic_amount, cache_path)
     else:
         # Der Haken ist nicht gesetzt, überspringe text_to_picture
         pass  # oder weiterer Code, der ausgeführt werden soll, wenn der Haken nicht gesetzt ist
@@ -210,11 +250,29 @@ def update_progress(length):
     percentage = round(100 * (processed_length / total_length_of_audio))
     recordning_label.config(text=f"Recognition: {percentage}%")
 
+def create_folder(folder_path):
+    # Überprüft, ob der Pfad existiert
+    if not os.path.exists(folder_path):
+        # Erstellt den Ordner, falls er nicht existiert
+        os.makedirs(folder_path)
+    else:
+        # Zählt hoch, bis ein nicht existierender Pfad gefunden wird
+        counter = 2
+        new_folder_path = f"{folder_path}_{counter}"
+        while os.path.exists(new_folder_path):
+            counter += 1
+            new_folder_path = f"{folder_path}_{counter}"
+
+        # Erstellt den neuen Ordner
+        os.makedirs(new_folder_path)
+
 # %%
 """AI Kommunikation"""
-def text_to_blog(audio_text, safe_path=None, style="Zufälliger Stil",
+def text_to_blog(audio_text, safe_path=None, style=None,
                  extra_instruction=""):
     global blog_instructions_path
+    if style is None:
+        style = "Zufälliger Stil"
     # Öffnet die Datei und liest den Inhalt
     with open(blog_instructions_path, 'r', encoding='utf-8') as file:
         blog_instructions = file.read()
@@ -244,11 +302,12 @@ def text_to_blog(audio_text, safe_path=None, style="Zufälliger Stil",
             file.write(blog_to_pic + blog_text + pic_style)
     return blog_text
 
-
-
-def blog_to_picture(blog_text, style="Zufälliger Stil", save_path=None):
+def blog_to_picture(blog_text, style=None, save_path=None, 
+                    pic_amount=1, cache_path=None):
     global picture_instructions_path
     global safety_guide_path
+    if style is None:
+        style="Denk dir einen zur Geschichte passenden aber außergewöhnlichen Stil aus!"
     # Öffnet die Datei und liest den Inhalt
     with open(picture_instructions_path, 'r', encoding='utf-8') as file:
         picture_instruction = file.read()
@@ -303,7 +362,7 @@ def blog_to_picture(blog_text, style="Zufälliger Stil", save_path=None):
     response = openai.Image.create(
         model="dall-e-3",
         prompt = dalle_safe_instruction,
-        n=1,  # Anzahl der Bilder
+        n=pic_amount,  # Anzahl der Bilder
         size="1024x1024",
         quality="standard",
     )
@@ -323,6 +382,13 @@ def blog_to_picture(blog_text, style="Zufälliger Stil", save_path=None):
         with open(save_path, 'wb') as file:
             response.raw.decode_content = True  # Stellt sicher, dass der Inhalt richtig dekodiert wird
             shutil.copyfileobj(response.raw, file)
+    
+    # Speicher Cache Daten
+    if cache_path is not None:
+        with open(os.path.join(cache_path, 'Dalle_instruction.txt'), 'w', encoding='utf-8') as file:
+            file.write(dalle_instruction)
+        with open(os.path.join(cache_path, 'Dalle_instruction_safe.txt'), 'w', encoding='utf-8') as file:
+            file.write(dalle_safe_instruction)
 
 # Funktion, um den Wert des Schiebereglers zu holen (optional)
 def get_slider_value(slider):
@@ -336,7 +402,7 @@ def get_license_folder_path():
     # Ermitteln des übergeordneten Verzeichnisses des aktuellen Skripts (zwei Ebenen nach oben)
     parent_directory = os.path.dirname(os.path.dirname(current_script_path))
     # Pfad zum Licence-Ordner im übergeordneten Verzeichnis
-    license_folder_path = os.path.join(parent_directory, 'Licence')
+    license_folder_path = os.path.join(parent_directory, 'licence')
     return license_folder_path
 
 def check_and_load_api_key():
