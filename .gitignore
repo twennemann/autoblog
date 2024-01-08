@@ -157,3 +157,5 @@ ffmpeg
 api_key.txt
 Licence
 text_data
+output/*
+!output/.gitkeep
