@@ -159,3 +159,5 @@ Licence
 text_data
 output/*
 !output/.gitkeep
+audio_data
+licence

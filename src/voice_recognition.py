@@ -515,13 +515,45 @@ def return_to_default(label_text=False,
     if return_full_text:
         full_text = ""
 
+# Globale Definition der Schieberegler für picture_pane
+picture_sliders = {}
+
+def create_picture_sliders():
+    global picture_sliders
+    picture_sliders = {
+        "img_temperature": tk.Scale(picture_pane, from_=0, to=1, resolution=0.1, orient="horizontal", label="Bild-Kreativität"),
+        "img_top_p": tk.Scale(picture_pane, from_=0, to=1, resolution=0.1, orient="horizontal", label="Bild-Diversität"),
+        "img_frequency_penalty": tk.Scale(picture_pane, from_=0, to=1, resolution=0.1, orient="horizontal", label="Bestrafung häufiger Bild-Tokens"),
+        "img_presence_penalty": tk.Scale(picture_pane, from_=0, to=1, resolution=0.1, orient="horizontal", label="Bestrafung/Belohnung neuer Bild-Tokens")
+    }
+
+    # Setze Standardwerte für die Bild-Schieberegler
+    picture_sliders["img_temperature"].set(0.6)
+    picture_sliders["img_top_p"].set(1.0)
+    picture_sliders["img_frequency_penalty"].set(0.5)
+    picture_sliders["img_presence_penalty"].set(0.0)
+
 def toggle_style_entry():
     if not generate_pictures_var.get():
+        if picture_pane.winfo_ismapped():
+            top_paned_window.remove(picture_pane)
         enter_style_label.pack_forget()
         style_entry.pack_forget()
+        # Entferne die Bild-Schieberegler vom Bildschirm
+        for slider in picture_sliders.values():
+            slider.pack_forget()
+
     else:
+        # Zeige das picture_pane an, wenn die Checkbox aktiviert ist
+        if not picture_pane.winfo_ismapped():
+            top_paned_window.add(picture_pane)
         enter_style_label.pack(pady=(5,0))
         style_entry.pack(pady=(0,20))
+
+        # Platziere die Bild-Schieberegler auf dem Bildschirm
+        for slider in picture_sliders.values():
+            slider.pack(pady=(5,5))
+
         
 window = tk.Tk()
 window.title("Speech Recognition")
@@ -549,6 +581,10 @@ top_paned_window.add(left_pane)
 # Rechter Bereich für KI-Request
 right_pane = tk.Frame(top_paned_window, relief=tk.RAISED, borderwidth=2)
 top_paned_window.add(right_pane)
+
+# Rechter Bereich für KI-Request
+picture_pane = tk.Frame(top_paned_window, relief=tk.RAISED, borderwidth=2)
+top_paned_window.add(picture_pane)
 
 # Unterer Bereich (unter left_pane und right_pane)
 generade_pane = tk.Frame(main_paned_window, relief=tk.RAISED, borderwidth=2)
@@ -604,15 +640,19 @@ for slider in sliders.values():
 
 # Checkbox für "Generate Pictures" mit Standardwert True
 generate_pictures_var = tk.BooleanVar(value=True)
-generate_pictures_check = tk.Checkbutton(right_pane, text="Generate Pictures", var=generate_pictures_var, command=toggle_style_entry)
-generate_pictures_check.pack(pady=(10, 0))
+generate_pictures_check = tk.Checkbutton(generade_pane, text="Generate Pictures", var=generate_pictures_var, command=toggle_style_entry)
+generate_pictures_check.pack(side=tk.LEFT, pady=(10, 0))
+
+#
 
 # Initialisiere das Eingabefeld für den Bildstil
-enter_style_label = tk.Label(right_pane, text="Enter the picture style:")
-style_entry = tk.Entry(right_pane)
+enter_style_label = tk.Label(picture_pane, text="Enter the picture style:")
+style_entry = tk.Entry(picture_pane)
 # Zeige das Eingabefeld standardmäßig an
 enter_style_label.pack(pady=(5,0))
 style_entry.pack(pady=(0,20))
+# Erstellen der Bild-Schieberegler beim Start des Programms
+create_picture_sliders()
 
 generate_blog_button = tk.Button(generade_pane, text="Generate", command=save_to_file, font=("Arial", 12))
 generate_blog_button.pack(pady=20)
@@ -624,7 +664,7 @@ change_api_key_button.pack(pady=20)
 
 """Anpassen der Angezeigten größen"""
 # Erhöhen der Größe des rechten Bereichs
-right_pane.config(width=400)
+# right_pane.config(width=400)
 
 # Anpassen der Breite der Eingabefelder
 extra_instruction_entry.config(width=50)
