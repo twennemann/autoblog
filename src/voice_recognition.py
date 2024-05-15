@@ -593,7 +593,7 @@ sliders = {
 }
 
 # Setze Standardwerte für die Schieberegler
-sliders["temperature"].set(0.6)
+sliders["temperature"].set(0.4)
 sliders["top_p"].set(1.0)
 sliders["frequency_penalty"].set(0.5)
 sliders["presence_penalty"].set(0.0)
