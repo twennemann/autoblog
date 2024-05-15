@@ -1,2 +1,2 @@
-# wav_to_text
- Turning Audiodata into a text, based on Chat GPT instructions
+# Autoblog
+ Turning Audiodata into a blogtext and a summarizing picture in a giving style, based on Chat GPT instructions.
